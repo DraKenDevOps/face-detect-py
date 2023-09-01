@@ -4,7 +4,7 @@ import random
 
 import matplotlib.pyplot as plt
 
-alg = "haarcascade_frontalface_default.xml"
+alg = "face-models/haarcascade_frontalface_default.xml"
 
 cwd = os.getcwd()
 print("Current working directory =>", cwd)

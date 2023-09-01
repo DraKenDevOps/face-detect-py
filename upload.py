@@ -1,4 +1,5 @@
 import os
+import sys
 from fastapi import FastAPI, UploadFile, File
 from secrets import token_hex
 import face_detect
@@ -8,6 +9,19 @@ cwd = os.getcwd()
 # upload_path = os.path.join(cwd, "uploads")
 
 app = FastAPI()
+
+
+def receive_signal(signalNumber, frame):
+    print("Received:", signalNumber)
+    sys.exit()
+
+
+@app.on_event("startup")
+async def startup_event():
+    import signal
+
+    signal.signal(signal.SIGINT, receive_signal)
+
 
 app.mount("/static", StaticFiles(directory="uploads"), name="static")
 
@@ -29,5 +43,5 @@ async def save_upload_file(image_file: UploadFile = File(...)) -> dict:
     try:
         check = await face_detect.faceDetection(file_path)
         return {"valid": check, "image": f"{file}"}
-    except Exception as inst:
-        print(inst)
+    except Exception as e:
+        print(e)
