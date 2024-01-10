@@ -52,7 +52,11 @@ print(image.shape)
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray_image.shape
 
-face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + alg)
+print("cv2.data.haarcascades => ", cv2.data.haarcascades)
+
+# deprecated
+# face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + alg)
+face_classifier = cv2.CascadeClassifier(alg)
 
 face = face_classifier.detectMultiScale(
     gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(40, 40)
