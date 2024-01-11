@@ -43,7 +43,7 @@ print("Image detected =>", randomImg)
 #     plt.show()
 #     plt.axis("off")
 
-imagePath = images[randomImg]
+imagePath = images[4]
 image = cv2.imread(imagePath)
 # cv2.imshow("Original", image)
 # cv2.waitKey(0)
@@ -67,12 +67,16 @@ if len(face) == 0:
 else:
     print({"valid": True})
 
+print(face)
 for x, y, w, h in face:
     cv2.rectangle(image, (x, y), (x + w, y + h), (117, 186, 27), 1)
 
 img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 plt.figure(figsize=(20, 10))
+mng = plt.get_current_fig_manager()
+# mng.resize(mng.window.showMaximized())
+mng.resize(*mng.window.maxsize())
 plt.imshow(img_rgb)
 plt.show()
 plt.axis("off")
