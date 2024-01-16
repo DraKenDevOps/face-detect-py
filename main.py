@@ -2,7 +2,7 @@ import cv2
 import os
 import random
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 alg = "face-models/haarcascade_frontalface_default.xml"
 
@@ -43,19 +43,28 @@ print("Image detected =>", randomImg)
 #     plt.show()
 #     plt.axis("off")
 
-imagePath = images[4]
+imagePath = images[1]
 image = cv2.imread(imagePath)
-# cv2.imshow("Original", image)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-print(image.shape)
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-gray_image.shape
+cv2.imshow("Original", image)
 
-print("cv2.data.haarcascades => ", cv2.data.haarcascades)
+# print(image.shape)
+# (height, width, channels) = image.shape
+
+# isVertIm = height > width
+rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (40, 3))
+# sqKernel = cv2.getStructuringElement(cv2.MORPH_RECT, (24, 24)
+#                                      if isVertIm else (28, 28))
+
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imshow("Gray Scale", gray_image)
+
+blackhat = cv2.morphologyEx(gray_image, cv2.MORPH_BLACKHAT, rectKernel)
+cv2.imshow("Blackhat", blackhat)
 
 # deprecated
 # face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + alg)
+# print("cv2.data.haarcascades => ", cv2.data.haarcascades)
+print("cv2.data.haarcascades => ", alg)
 face_classifier = cv2.CascadeClassifier(alg)
 
 face = face_classifier.detectMultiScale(
@@ -67,16 +76,23 @@ if len(face) == 0:
 else:
     print({"valid": True})
 
-print(face)
+print("Face Detected => ", face)
 for x, y, w, h in face:
     cv2.rectangle(image, (x, y), (x + w, y + h), (117, 186, 27), 1)
 
-img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# img_rgb = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
 
-plt.figure(figsize=(20, 10))
-mng = plt.get_current_fig_manager()
+# plt.figure(figsize=(10, 6))
+# mng = plt.get_current_fig_manager()
 # mng.resize(mng.window.showMaximized())
-mng.resize(*mng.window.maxsize())
-plt.imshow(img_rgb)
-plt.show()
-plt.axis("off")
+# mng.resize(*mng.window.maxsize())
+# plt.imshow(img_rgb)
+# plt.show()
+# plt.axis("off")
+
+# cv2.imshow("Finalize", img_rgb)
+cv2.imshow("Finalize", image)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

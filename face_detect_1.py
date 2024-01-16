@@ -31,6 +31,7 @@ def detectFace(image, FaceNet, confidence_input):
     )
     FaceNet.setInput(blob)
     detections = FaceNet.forward()
+    print("Detections => ", detections)
     for i in range(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
         if confidence > confidence_input:
@@ -66,6 +67,6 @@ face = facedetection.detect_face(images[1], 0.1)
 # plt.imshow(img_rgb)
 # plt.show()
 # plt.axis("off")
-cv2.imshow("Result" + images[randomImg], face[0])
+cv2.imshow("Result " + images[1], face[0])
 cv2.waitKey(0)
 cv2.destroyAllWindows()
