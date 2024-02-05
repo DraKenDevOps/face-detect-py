@@ -2,7 +2,7 @@ annotated-types==0.6.0
 anyio==4.2.0
 contourpy==1.2.0
 cycler==0.12.1
-fastapi==0.109.0
+fastapi==0.109.1
 fonttools==4.47.2
 idna==3.6
 kiwisolver==1.4.5
